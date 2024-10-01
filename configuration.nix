@@ -108,6 +108,7 @@
     mg
     vscode-with-extensions
     wget
+    google-chrome
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
