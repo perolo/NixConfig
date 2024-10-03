@@ -112,6 +112,7 @@
     google-chrome
     alejandra
     rustup
+    clang
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

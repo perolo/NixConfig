@@ -83,6 +83,15 @@
     };
   };
 
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+      dracula-theme.theme-dracula
+      yzhang.markdown-all-in-one
+      rust-lang.rust-analyzer
+    ];
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
