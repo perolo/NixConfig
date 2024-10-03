@@ -111,6 +111,7 @@
     wget
     google-chrome
     alejandra
+    rustup
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
