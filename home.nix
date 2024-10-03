@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "pero";
@@ -73,7 +75,7 @@
 
   programs.git = {
     enable = true;
-    userName  = "Per Olofsson";
+    userName = "Per Olofsson";
     userEmail = "per.e.olofsson@gmail.com";
     aliases = {
       c = "commit";
