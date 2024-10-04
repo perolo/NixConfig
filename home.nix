@@ -89,6 +89,9 @@
       dracula-theme.theme-dracula
       yzhang.markdown-all-in-one
       rust-lang.rust-analyzer
+      vadimcn.vscode-lldb
+      ms-vscode.cpptools
+      webfreak.debug
     ];
   };
 

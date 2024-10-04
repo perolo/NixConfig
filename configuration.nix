@@ -113,6 +113,7 @@
     alejandra
     rustup
     clang
+    jetbrains.rust-rover
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
