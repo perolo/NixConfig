@@ -56,6 +56,15 @@
     variant = "";
   };
 
+  # add the following line somewhere in `configuration.nix`
+  # for example, in between locales and audio sections
+  # programs.sway.enable = true;
+
+  # audio
+  #sound.enable = true;
+  #nixpkgs.config.pulseaudio = true;
+  #hardware.pulseaudio.enable = true;
+
   # Configure console keymap
   console.keyMap = "sv-latin1";
 
@@ -71,7 +80,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -112,7 +121,44 @@
     rustup
     clang
     jetbrains.rust-rover
+    waybar
+    (
+      pkgs.waybar.overrideAttrs (oldAttrs: {
+        mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
+      })
+    )
+    dunst
+    libnotify
+    swww
+    kitty
+    # alacritty
+    rofi-wayland
   ];
+
+  programs.hyprland = {
+    enable = true;
+    #nvidiaPatches = true;
+    xwayland.enable = true;
+  };
+
+  environment.sessionVariables = {
+    # If your cursor becomes invisible
+    #WLR_NO_HARDWARE_CURSORS = "1";
+    # Hint electron apps to use wayland
+    #NIXOS_OZONE_WL = "1";
+  };
+
+  hardware = {
+    # Opengl
+    #opengl.enable = true;
+
+    # Most wayland compositors need this
+    #nvidia.modesetting.enable = true;
+  };
+
+  # XDG portal
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

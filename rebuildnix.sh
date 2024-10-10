@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash/env
 set -e
 pushd ~/NixConfig/
 # nvim oatman-pc.nix
