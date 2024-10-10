@@ -99,19 +99,11 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  nix.settings.experimental-features = ["nix-command" "flakes"];
   environment.systemPackages = with pkgs; [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    home-manager
+    #  wget
     git
-    mg
-    vscode-with-extensions
-    wget
     google-chrome
-    alejandra
-    rustup
-    clang
-    jetbrains.rust-rover
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

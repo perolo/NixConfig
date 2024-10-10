@@ -73,6 +73,8 @@
     # EDITOR = "emacs";
   };
 
+  nixpkgs.config.allowUnfree = true;
+  
   programs.git = {
     enable = true;
     userName = "Per Olofsson";
@@ -91,7 +93,7 @@
       rust-lang.rust-analyzer
       vadimcn.vscode-lldb
       ms-vscode.cpptools
-      webfreak.debug
+      #webfreak.debug
     ];
   };
 

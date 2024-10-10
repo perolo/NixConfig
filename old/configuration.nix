@@ -9,11 +9,13 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./hardware-acceleration.nix
   ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.useOSProber = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -84,7 +86,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.pero = {
     isNormalUser = true;
-    description = "pero";
+    description = "Per Olofsson";
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       #  thunderbird
