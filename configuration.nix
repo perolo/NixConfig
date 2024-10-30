@@ -133,6 +133,7 @@
     kitty
     # alacritty
     rofi-wayland
+    gimp-with-plugins
   ];
 
   programs.hyprland = {

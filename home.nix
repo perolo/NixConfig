@@ -123,9 +123,19 @@
       rust-lang.rust-analyzer
       vadimcn.vscode-lldb
       ms-vscode.cpptools
+      tamasfe.even-better-toml
+      fill-labs.dependi
+      usernamehw.errorlens
+      gruntfuggly.todo-tree
+      #wokwi.wokwi-vscode
       #webfreak.debug
     ];
   };
+
+  #vscode-with-extensions = pkgs.vscode-with-extensions.override {
+  #  extensions = with pkgs.vscode-extensions; [
+  #  ];
+  #};
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
