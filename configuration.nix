@@ -134,6 +134,7 @@
     # alacritty
     rofi-wayland
     gimp-with-plugins
+    digikam
   ];
 
   programs.hyprland = {

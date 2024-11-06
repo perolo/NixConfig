@@ -132,6 +132,13 @@
     ];
   };
 
+  programs.bash = {
+    enable = true;
+    shellAliases = {
+      ll = "ls -al";
+    };
+  };
+
   #vscode-with-extensions = pkgs.vscode-with-extensions.override {
   #  extensions = with pkgs.vscode-extensions; [
   #  ];
