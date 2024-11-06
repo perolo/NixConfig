@@ -135,6 +135,7 @@
     rofi-wayland
     gimp-with-plugins
     digikam
+    exiftool
   ];
 
   programs.hyprland = {
