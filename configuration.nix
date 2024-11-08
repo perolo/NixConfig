@@ -134,8 +134,11 @@
     # alacritty
     rofi-wayland
     gimp-with-plugins
-    digikam
-    exiftool
+    digikam # picture management
+    exiftool # Read pictre data
+    xfce.xfce4-pulseaudio-plugin # sound source edit
+    kdenlive # video edit
+    ark #peazip #file-roller         # zip
   ];
 
   programs.hyprland = {
