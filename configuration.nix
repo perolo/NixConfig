@@ -139,6 +139,9 @@
     xfce.xfce4-pulseaudio-plugin # sound source edit
     kdenlive # video edit
     ark #peazip #file-roller         # zip
+    #poppler-utils #pdf utils
+    obsidian
+    menulibre
   ];
 
   programs.hyprland = {
