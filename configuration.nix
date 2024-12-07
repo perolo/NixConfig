@@ -150,6 +150,7 @@
     menulibre
     pavucontrol # volume control
     pamixer # pamixer --allow-boost --set-volume 100
+    discord
   ];
 
   programs.hyprland = {
