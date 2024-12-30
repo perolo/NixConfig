@@ -24,10 +24,15 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
 
   # Set your time zone.
-  #time.timeZone = "Europe/Stockholm";
-  time.timeZone = "Australia/Perth";
+  time.timeZone = "Europe/Stockholm";
+  #time.timeZone = "Australia/Perth";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -100,7 +105,7 @@
   users.users.pero = {
     isNormalUser = true;
     description = "pero";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["networkmanager" "wheel" "docker"];
     packages = with pkgs; [
       #  thunderbird
     ];
@@ -151,6 +156,12 @@
     pavucontrol # volume control
     pamixer # pamixer --allow-boost --set-volume 100
     discord
+    dioxus-cli # rust dioxus
+    graalvmCEPackages.graalnodejs # npx, npm, ...
+    tailwindcss # rust dioxus
+    openssl
+    pkg-config
+    docker
   ];
 
   programs.hyprland = {
@@ -185,6 +196,8 @@
     #/home/pero/.vscode/extensions/vadimcn.vscode-lldb-1.11.0-linux-x64/adapter/codelldb
     #codelldb
   ];
+
+  virtualisation.docker.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
