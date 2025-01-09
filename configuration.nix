@@ -78,7 +78,8 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+ # hardware.pulseaudio.enable = false;
+ # services.pulseaudio = false; #Renamed - Todo Try to enable again, failed the last time to get the headphones working
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -144,7 +145,7 @@
     kitty
     # alacritty
     rofi-wayland
-    gimp-with-plugins
+    #gimp-with-plugins # Removing due to build errors
     digikam # picture management
     exiftool # Read pictre data
     xfce.xfce4-pulseaudio-plugin # sound source edit
@@ -162,6 +163,9 @@
     openssl
     pkg-config
     docker
+    neofetch
+    pandoc
+    libreoffice
   ];
 
   programs.hyprland = {
