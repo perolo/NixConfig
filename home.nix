@@ -71,6 +71,7 @@
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
+    # LIBCLANG_PATH = "${pkgs.llvmPackages_11.libclang.lib}/lib";
   };
 
   programs.kitty.enable = true; # required for the default Hyprland config
@@ -123,6 +124,7 @@
       rust-lang.rust-analyzer
       vadimcn.vscode-lldb
       ms-vscode.cpptools
+      ms-azuretools.vscode-docker
       tamasfe.even-better-toml
       fill-labs.dependi
       usernamehw.errorlens

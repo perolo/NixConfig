@@ -5,7 +5,11 @@
   config,
   pkgs,
   ...
-}: {
+}: 
+  let
+    unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  in {
+
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -130,8 +134,12 @@
     wget
     google-chrome
     alejandra
-    rustup
-    clang
+    unstable.rustup
+    #rpi-imager
+    #probe-rs-tools
+    espup
+    clang    
+    rustlings
     jetbrains.rust-rover
     waybar
     (
@@ -166,6 +174,9 @@
     neofetch
     pandoc
     libreoffice
+    unstable.wasm-bindgen-cli
+    unstable.xfce.thunar
+    sticky
   ];
 
   programs.hyprland = {
@@ -199,6 +210,7 @@
     # here, NOT in environment.systemPackages
     #/home/pero/.vscode/extensions/vadimcn.vscode-lldb-1.11.0-linux-x64/adapter/codelldb
     #codelldb
+
   ];
 
   virtualisation.docker.enable = true;
@@ -230,3 +242,4 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
 }
+
