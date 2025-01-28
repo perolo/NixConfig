@@ -134,28 +134,28 @@
     wget
     google-chrome
     alejandra
-    unstable.rustup
+    #unstable.rustup
     #rpi-imager
     #probe-rs-tools
-    espup
-    clang    
-    rustlings
-    jetbrains.rust-rover
-    waybar
-    (
-      pkgs.waybar.overrideAttrs (oldAttrs: {
-        mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
-      })
-    )
+    #espup
+    #clang    
+    #rustlings
+    #jetbrains.rust-rover
+    #waybar
+    #(
+    #  pkgs.waybar.overrideAttrs (oldAttrs: {
+    #    mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
+    #  })
+    #)
     dunst
     libnotify
-    swww
+    # swww # for wayland
     kitty
     # alacritty
-    rofi-wayland
+    # rofi-wayland # for wayland
     #gimp-with-plugins # Removing due to build errors
     digikam # picture management
-    exiftool # Read pictre data
+    exiftool # Read picture data
     xfce.xfce4-pulseaudio-plugin # sound source edit
     kdenlive # video edit
     ark #peazip #file-roller         # zip
@@ -165,25 +165,29 @@
     pavucontrol # volume control
     pamixer # pamixer --allow-boost --set-volume 100
     discord
-    dioxus-cli # rust dioxus
-    graalvmCEPackages.graalnodejs # npx, npm, ...
-    tailwindcss # rust dioxus
+    #dioxus-cli # rust dioxus
+    #graalvmCEPackages.graalnodejs # npx, npm, ...
+    #tailwindcss # rust dioxus
     openssl
     pkg-config
-    docker
+    #docker
     neofetch
-    pandoc
+    pandoc # pdf in obsidian
     libreoffice
-    unstable.wasm-bindgen-cli
-    unstable.xfce.thunar
-    sticky
+    #unstable.wasm-bindgen-cli
+    #unstable.xfce.thunar
+    # sticky # not super impressed
+    slack
+    #file
+    #elfutils
+    #elf2uf2-rs
   ];
 
-  programs.hyprland = {
-    enable = true;
-    #nvidiaPatches = true;
-    xwayland.enable = true;
-  };
+  #programs.hyprland = {
+  #  enable = true;
+  #  #nvidiaPatches = true;
+  #  xwayland.enable = true;
+  #};
 
   environment.sessionVariables = {
     # If your cursor becomes invisible
@@ -213,7 +217,13 @@
 
   ];
 
-  virtualisation.docker.enable = true;
+  #virtualisation.docker.enable = true;
+
+  services.udev.packages = [
+    pkgs.android-udev-rules
+  ];
+  
+  # programs.adb.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

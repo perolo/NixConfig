@@ -131,6 +131,10 @@
       gruntfuggly.todo-tree
       #wokwi.wokwi-vscode
       #webfreak.debug
+      #raraspberry-pi.raspberry-pi-pico
+      # swellaby.vscode-rust-test-adapter
+      jnoortheen.nix-ide
+
     ];
   };
 
