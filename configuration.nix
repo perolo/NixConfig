@@ -110,7 +110,7 @@
   users.users.pero = {
     isNormalUser = true;
     description = "pero";
-    extraGroups = ["networkmanager" "wheel" "docker"];
+    extraGroups = ["networkmanager" "wheel" "docker" "adbusers"];
     packages = with pkgs; [
       #  thunderbird
     ];
@@ -170,7 +170,7 @@
     #tailwindcss # rust dioxus
     openssl
     pkg-config
-    #docker
+    docker
     neofetch
     pandoc # pdf in obsidian
     libreoffice
@@ -181,7 +181,17 @@
     #file
     #elfutils
     #elf2uf2-rs
+    fzf
+
+            go
+            gopls
+            gotools
+            go-tools
+            jq
+            clang    
   ];
+
+  #programs.go.enable = true;
 
   #programs.hyprland = {
   #  enable = true;
@@ -217,11 +227,18 @@
 
   ];
 
-  #virtualisation.docker.enable = true;
+  virtualisation.docker.enable = true;
 
   services.udev.packages = [
     pkgs.android-udev-rules
   ];
+
+  services.udev.extraRules = ''
+    #
+    ATTR{idProduct}=="1015", ATTR{idVendor}=="1366", MODE="666"
+    ATTR{idProduct}=="1015", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+  '';
+
   
   # programs.adb.enable = true;
 
