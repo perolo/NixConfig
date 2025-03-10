@@ -130,7 +130,7 @@
     home-manager
     git
     mg
-    vscode-with-extensions
+    unstable.vscode-with-extensions
     wget
     google-chrome
     alejandra
@@ -183,15 +183,24 @@
     #elf2uf2-rs
     fzf
 
-            go
-            gopls
-            gotools
-            go-tools
-            jq
-            clang    
+    #        go
+    #        gopls
+    #        gotools
+    #        go-tools
+    #        jq
+    #        clang    
+    #unstable.ollama
+    inetutils
+    keepass
+    #surrealdb
+    #surrealist
+    unstable.influxdb2-server
+    unstable.influxdb2-cli
   ];
 
+  #services.ollama.enable = true;
   #programs.go.enable = true;
+  services.influxdb2.enable = true;
 
   #programs.hyprland = {
   #  enable = true;
@@ -259,7 +268,16 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
+  #networking.firewall = {
+  #  enable = false;
+  #  allowedTCPPorts = [ 80 443 ];
+  #  allowedUDPPortRanges = [
+  #    { from = 2344; to = 9300; }
+  #  ];
+  #};
+
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

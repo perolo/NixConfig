@@ -134,7 +134,7 @@
       #raraspberry-pi.raspberry-pi-pico
       # swellaby.vscode-rust-test-adapter
       jnoortheen.nix-ide
-
+      ms-vscode-remote.remote-ssh
     ];
   };
 
