@@ -5,11 +5,9 @@
   config,
   pkgs,
   ...
-}: 
-  let
-    unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-  in {
-
+}: let
+  unstable = import <nixos-unstable> {config = {allowUnfree = true;};};
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -82,8 +80,8 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
- # hardware.pulseaudio.enable = false;
- # services.pulseaudio = false; #Renamed - Todo Try to enable again, failed the last time to get the headphones working
+  # hardware.pulseaudio.enable = false;
+  # services.pulseaudio = false; #Renamed - Todo Try to enable again, failed the last time to get the headphones working
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -138,7 +136,7 @@
     #rpi-imager
     #probe-rs-tools
     #espup
-    #clang    
+    #clang
     #rustlings
     #jetbrains.rust-rover
     #waybar
@@ -188,7 +186,7 @@
     #        gotools
     #        go-tools
     #        jq
-    #        clang    
+    #        clang
     #unstable.ollama
     inetutils
     keepass
@@ -233,7 +231,6 @@
     # here, NOT in environment.systemPackages
     #/home/pero/.vscode/extensions/vadimcn.vscode-lldb-1.11.0-linux-x64/adapter/codelldb
     #codelldb
-
   ];
 
   virtualisation.docker.enable = true;
@@ -248,7 +245,6 @@
     ATTR{idProduct}=="1015", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
   '';
 
-  
   # programs.adb.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -277,8 +273,6 @@
   #  ];
   #};
 
-
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -287,4 +281,3 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
 }
-
