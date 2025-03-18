@@ -4,3 +4,4 @@ nixos-switch.log
 # Added by cargo
 
 /target
+.webui_secret_key

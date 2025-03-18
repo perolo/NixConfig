@@ -34,7 +34,6 @@ in {
 
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
-  #time.timeZone = "Australia/Perth";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -124,14 +123,47 @@ in {
   # $ nix search wget
   nix.settings.experimental-features = ["nix-command" "flakes"];
   environment.systemPackages = with pkgs; [
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    # Nix stuff
     home-manager
+    alejandra # Nix formatter
+
+    # Utils
     git
     mg
-    unstable.vscode-with-extensions
+    btop
+    serie #                Git log/tree
+    dunst #                notification daemon
+    libnotify #            notification desktop
+    kitty #                terminal emulator
+    # alacritty          # terminal emulator
+    ark #peazip          # file-roller         # zip
+    # gnome-multi-writer # write usb iso
+    pkg-config
+    neofetch
+    menulibre #            Menueditor
+    fzf
+
+    # Networking
+    netscanner #           Network traffic monitoring
+    #xh                  # friendly curl
+    #posting             # Need to build self - postman alternative in teminal
+    #echoapi             # Need to build self - postman alternative in teminal, API testing
     wget
     google-chrome
-    alejandra
+    brave
+    openssl
+    inetutils
+
+    # Applications
+    obsidian
+    pandoc #               pdf in obsidian
+    discord
+    libreoffice
+    slack
+    unstable.ollama
+    keepass
+
+    # Programming
     #unstable.rustup
     #rpi-imager
     #probe-rs-tools
@@ -139,66 +171,47 @@ in {
     #clang
     #rustlings
     #jetbrains.rust-rover
+    unstable.vscode-with-extensions
+    #dioxus-cli # rust dioxus
+    #graalvmCEPackages.graalnodejs # npx, npm, ...
+    #tailwindcss #         rust dioxus
+    docker
+    #go
+    #  gopls
+    #  gotools
+    #  go-tools
+    jq
+    #surrealdb
+    #surrealist
+    unstable.influxdb2-server
+    unstable.influxdb2-cli
+    rustdesk
+    rustdesk-server         # hbbs -r 192.168.50.60, hbbr
+
+    # Media
+    gimp-with-plugins #
+    kdePackages.filelight #        visual directory/file size scan
+    digikam # picture management
+    exiftool #                     Read picture data
+    xfce.xfce4-pulseaudio-plugin # sound source edit
+    kdenlive #                     video edit
+    #poppler-utils #               pdf utils
+    pavucontrol #                  volume control
+    pamixer #                      pamixer --allow-boost --set-volume 100
+    #file
+    #elfutils
+    #elf2uf2-rs
+
+    # Wayland / Hyprland
     #waybar
     #(
     #  pkgs.waybar.overrideAttrs (oldAttrs: {
     #    mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
     #  })
     #)
-    dunst
-    libnotify
     # swww # for wayland
-    kitty
-    # alacritty
     # rofi-wayland # for wayland
-    #gimp-with-plugins # Removing due to build errors
-    digikam # picture management
-    exiftool # Read picture data
-    xfce.xfce4-pulseaudio-plugin # sound source edit
-    kdenlive # video edit
-    ark #peazip #file-roller         # zip
-    #poppler-utils #pdf utils
-    obsidian
-    menulibre
-    pavucontrol # volume control
-    pamixer # pamixer --allow-boost --set-volume 100
-    discord
-    #dioxus-cli # rust dioxus
-    #graalvmCEPackages.graalnodejs # npx, npm, ...
-    #tailwindcss # rust dioxus
-    openssl
-    pkg-config
-    docker
-    neofetch
-    pandoc # pdf in obsidian
-    libreoffice
-    #unstable.wasm-bindgen-cli
-    #unstable.xfce.thunar
-    # sticky # not super impressed
-    slack
-    #file
-    #elfutils
-    #elf2uf2-rs
-    fzf
-
-    #        go
-    #        gopls
-    #        gotools
-    #        go-tools
-    #        jq
-    #        clang
-    #unstable.ollama
-    inetutils
-    keepass
-    #surrealdb
-    #surrealist
-    unstable.influxdb2-server
-    unstable.influxdb2-cli
   ];
-
-  #services.ollama.enable = true;
-  #programs.go.enable = true;
-  services.influxdb2.enable = true;
 
   #programs.hyprland = {
   #  enable = true;
@@ -233,8 +246,6 @@ in {
     #codelldb
   ];
 
-  virtualisation.docker.enable = true;
-
   services.udev.packages = [
     pkgs.android-udev-rules
   ];
@@ -259,6 +270,21 @@ in {
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
+
+  virtualisation.docker.enable = true;
+  services.ollama.enable = true;
+  #programs.go.enable = true;
+  services.influxdb2.enable = true;
+
+  services.rustdesk-server = {
+    enable = true;
+    openFirewall = true;
+    relay.enable = true;
+    signal.enable = true;
+    signal.extraArgs = [
+      "192.168.50.60"
+    ];
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
