@@ -10,11 +10,17 @@
   # Home Manager state version
   home.stateVersion = "24.05"; # Keep this as is unless you know what you're doing
 
+  nixpkgs.config.android_sdk.accept_license = true;
+
   # Packages to install
   home.packages = with pkgs; [
     tldr  # A simplified and community-driven man pages
     # Add more packages here as needed
-    
+
+    # Android Studio
+    android-studio-full
+    android-tools
+    jdk  # Install a JDK (required for Android development)    
   ];
 
   # Dotfile management
@@ -31,12 +37,16 @@
 
   # Environment variables
   home.sessionVariables = {
-    # EDITOR = "emacs";  # Uncomment if you use Emacs
+    ANDROID_HOME = "${config.home.homeDirectory}/Android/Sdk";
+    ANDROID_SDK_ROOT = "${config.home.homeDirectory}/Android/Sdk";
+    JAVA_HOME = "${pkgs.jdk}";    
     # LIBCLANG_PATH = "${pkgs.llvmPackages_11.libclang.lib}/lib";  # Uncomment if needed
   };
 
   # Enable Kitty terminal emulator
   programs.kitty.enable = true;
+
+  # programs.adb.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

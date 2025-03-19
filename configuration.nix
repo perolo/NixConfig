@@ -114,7 +114,7 @@ in {
   };
 
   # Install firefox.
-  programs.firefox.enable = true;
+  #programs.firefox.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -142,6 +142,7 @@ in {
     neofetch
     menulibre #            Menueditor
     fzf
+    kdePackages.filelight #        visual directory/file size scan
 
     # Networking
     netscanner #           Network traffic monitoring
@@ -158,10 +159,12 @@ in {
     obsidian
     pandoc #               pdf in obsidian
     discord
-    libreoffice
-    slack
-    unstable.ollama
+    #libreoffice
+    #slack
+    #unstable.ollama
     keepass
+    steam-run
+    #rpi-imager 
 
     # Programming
     #unstable.rustup
@@ -190,7 +193,6 @@ in {
 
     # Media
     gimp-with-plugins #
-    kdePackages.filelight #        visual directory/file size scan
     digikam # picture management
     exiftool #                     Read picture data
     xfce.xfce4-pulseaudio-plugin # sound source edit
@@ -256,6 +258,8 @@ in {
     ATTR{idProduct}=="1015", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
   '';
 
+  programs.steam.enable = true;
+
   # programs.adb.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -272,7 +276,7 @@ in {
   # services.openssh.enable = true;
 
   virtualisation.docker.enable = true;
-  services.ollama.enable = true;
+  #services.ollama.enable = true;
   #programs.go.enable = true;
   services.influxdb2.enable = true;
 
