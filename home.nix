@@ -14,13 +14,14 @@
 
   # Packages to install
   home.packages = with pkgs; [
-    tldr  # A simplified and community-driven man pages
+    tldr # A simplified and community-driven man pages
     # Add more packages here as needed
-
+    # (pkgs.uutils-coreutils.override { prefix = ""; })
     # Android Studio
-    android-studio-full
-    android-tools
-    jdk  # Install a JDK (required for Android development)    
+    #android-studio-full
+    #android-studio
+    #android-tools
+    #jdk # Install a JDK (required for Android development)
   ];
 
   # Dotfile management
@@ -37,16 +38,16 @@
 
   # Environment variables
   home.sessionVariables = {
-    ANDROID_HOME = "${config.home.homeDirectory}/Android/Sdk";
-    ANDROID_SDK_ROOT = "${config.home.homeDirectory}/Android/Sdk";
-    JAVA_HOME = "${pkgs.jdk}";    
+    #ANDROID_HOME = "${config.home.homeDirectory}/Android/Sdk";
+    #NDROID_SDK_ROOT = "${config.home.homeDirectory}/Android/Sdk";
+    #JAVA_HOME = "${pkgs.jdk}";
     # LIBCLANG_PATH = "${pkgs.llvmPackages_11.libclang.lib}/lib";  # Uncomment if needed
   };
 
   # Enable Kitty terminal emulator
   programs.kitty.enable = true;
 
-  # programs.adb.enable = true;
+  #programs.adb.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -63,9 +64,10 @@
   };
 
   # Visual Studio Code configuration
+  #programs.vscode.profiles.default.extensions
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
       dracula-theme.theme-dracula
       yzhang.markdown-all-in-one
       rust-lang.rust-analyzer

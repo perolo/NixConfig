@@ -165,7 +165,7 @@ in {
     #unstable.ollama
     keepass
     steam-run
-    #rpi-imager 
+    #rpi-imager
 
     # Programming
     #unstable.rustup
@@ -197,7 +197,7 @@ in {
     digikam # picture management
     exiftool #                     Read picture data
     xfce.xfce4-pulseaudio-plugin # sound source edit
-    #kdenlive # 
+    #kdenlive #
     #kdePackages.kdenlive                    video edit
     #poppler-utils #               pdf utils
     pavucontrol #                  volume control
