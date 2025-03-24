@@ -136,7 +136,8 @@ in {
     libnotify #            notification desktop
     kitty #                terminal emulator
     # alacritty          # terminal emulator
-    ark #peazip          # file-roller         # zip
+    #ark #peazip          # file-roller         # zip
+    #kdePackages.ark
     # gnome-multi-writer # write usb iso
     pkg-config
     neofetch
@@ -188,15 +189,16 @@ in {
     #surrealist
     unstable.influxdb2-server
     unstable.influxdb2-cli
-    rustdesk
-    rustdesk-server         # hbbs -r 192.168.50.60, hbbr
+    #rustdesk
+    #rustdesk-server         # hbbs -r 192.168.50.60, hbbr
 
     # Media
     gimp-with-plugins #
     digikam # picture management
     exiftool #                     Read picture data
     xfce.xfce4-pulseaudio-plugin # sound source edit
-    kdenlive #                     video edit
+    #kdenlive # 
+    #kdePackages.kdenlive                    video edit
     #poppler-utils #               pdf utils
     pavucontrol #                  volume control
     pamixer #                      pamixer --allow-boost --set-volume 100
