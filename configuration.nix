@@ -128,7 +128,6 @@ in {
     alejandra # Nix formatter
 
     # Utils
-    git
     mg
     btop
     serie #                Git log/tree
@@ -191,6 +190,9 @@ in {
     unstable.influxdb2-cli
     #rustdesk
     #rustdesk-server         # hbbs -r 192.168.50.60, hbbr
+    git
+    jujutsu         # DVCS
+    gg-jj           # jujustsu GUI  
 
     # Media
     gimp-with-plugins #

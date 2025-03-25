@@ -16,7 +16,7 @@
   home.packages = with pkgs; [
     tldr # A simplified and community-driven man pages
     # Add more packages here as needed
-    # (pkgs.uutils-coreutils.override { prefix = ""; })
+    (pkgs.uutils-coreutils.override { prefix = ""; })
     # Android Studio
     #android-studio-full
     #android-studio
@@ -84,6 +84,7 @@
       # swellaby.vscode-rust-test-adapter
       jnoortheen.nix-ide
       ms-vscode-remote.remote-ssh
+      vscode-extensions.visualjj.visualjj
     ];
   };
 
