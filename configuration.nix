@@ -7,6 +7,9 @@
   ...
 }: let
   unstable = import <nixos-unstable> {config = {allowUnfree = true;};};
+  #unstable = import (fetchTarball https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz) {
+  #  config = config.nixpkgs.config; # Inherit the global config
+  #};
 in {
   imports = [
     # Include the results of the hardware scan.
@@ -16,6 +19,7 @@ in {
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.memtest86.enable = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -62,6 +66,9 @@ in {
     layout = "se";
     variant = "";
   };
+
+  #nix.settings.sandbox = false;
+  #nix.settings.sandbox-build-dir = true; # or false
 
   # add the following line somewhere in `configuration.nix`
   # for example, in between locales and audio sections
@@ -143,6 +150,7 @@ in {
     menulibre #            Menueditor
     fzf
     kdePackages.filelight #        visual directory/file size scan
+    dysk
 
     # Networking
     netscanner #           Network traffic monitoring
@@ -159,7 +167,8 @@ in {
     obsidian
     pandoc #               pdf in obsidian
     discord
-    #libreoffice
+    libreoffice
+    #gscan2pdf      # simple pdf scanner
     #slack
     #unstable.ollama
     keepass
@@ -191,14 +200,13 @@ in {
     #rustdesk
     #rustdesk-server         # hbbs -r 192.168.50.60, hbbr
     git
-    jujutsu         # DVCS
-    gg-jj           # jujustsu GUI  
+    jujutsu # DVCS
+    gg-jj # jujustsu GUI
 
     # Media
-    gimp-with-plugins #
+    gimp3-with-plugins #
     digikam # picture management
     exiftool #                     Read picture data
-    xfce.xfce4-pulseaudio-plugin # sound source edit
     #kdenlive #
     #kdePackages.kdenlive                    video edit
     #poppler-utils #               pdf utils
@@ -207,6 +215,36 @@ in {
     #file
     #elfutils
     #elf2uf2-rs
+    #inkscape-with-extensions
+
+    # Xfce
+    xfce.xfce4-pulseaudio-plugin # sound source edit
+    xfce.catfish
+    xfce.gigolo
+    xfce.orage
+    xfce.xfburn
+    xfce.xfce4-appfinder
+    xfce.xfce4-clipman-plugin
+    xfce.xfce4-cpugraph-plugin
+    xfce.xfce4-dict
+    xfce.xfce4-fsguard-plugin
+    xfce.xfce4-genmon-plugin
+    xfce.xfce4-netload-plugin
+    xfce.xfce4-panel
+    xfce.xfce4-systemload-plugin
+    xfce.xfce4-weather-plugin
+    xfce.xfce4-whiskermenu-plugin
+    xfce.xfce4-xkb-plugin
+    xfce.xfdashboard
+    xorg.xev
+    elementary-xfce-icon-theme
+    xcolor
+    xdo
+    xdotool
+    zuki-themes
+
+    gtk2
+    xorg.libX11
 
     # Wayland / Hyprland
     #waybar
