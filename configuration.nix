@@ -1,9 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
+# sudo nixos-rebuild switch --flake .#nixos --impure
+# nix flake update
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
   unstable = import <nixos-unstable> {config = {allowUnfree = true;};};
@@ -151,6 +154,17 @@ in {
     fzf
     kdePackages.filelight #        visual directory/file size scan
     dysk
+    gnome-keyring
+    bat #                  Instead of cat
+    fish #                 friendly shell
+    #ripgrep #              Better than grep
+    #fd #                   Better than find
+    #eza #                  Better than ls
+    #zoxide                 Better than cd ?  zoxide init fish | source
+    dust #                 Better than du
+    #dua #                  Better than du ? dua interactive
+    #delta #                Alternative to diff
+    ripgrep-all #           Better than greo ! rga docker *.pdf
 
     # Networking
     netscanner #           Network traffic monitoring
@@ -162,6 +176,7 @@ in {
     brave
     openssl
     inetutils
+    #rclone #              synchonize with google drive anf photos
 
     # Applications
     obsidian
@@ -202,6 +217,11 @@ in {
     git
     jujutsu # DVCS
     gg-jj # jujustsu GUI
+    openjdk17-bootstrap
+    bacon #                  # cargo in the background
+    mask #                    define builds with a md file
+    gitea
+    gitea-actions-runner
 
     # Media
     gimp3-with-plugins #
@@ -216,6 +236,10 @@ in {
     #elfutils
     #elf2uf2-rs
     #inkscape-with-extensions
+    plantuml
+    spotify #                      Not working OK?
+    ncspot #                       terminal spotify client
+    mermaid-cli
 
     # Xfce
     xfce.xfce4-pulseaudio-plugin # sound source edit
@@ -290,15 +314,19 @@ in {
     #codelldb
   ];
 
-  services.udev.packages = [
-    pkgs.android-udev-rules
-  ];
+  #services.udev.packages = [
+  #  pkgs.android-udev-rules
+  #];
 
-  services.udev.extraRules = ''
-    #
-    ATTR{idProduct}=="1015", ATTR{idVendor}=="1366", MODE="666"
-    ATTR{idProduct}=="1015", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
-  '';
+  #services.udev.extraRules = ''
+  #  #
+  #  ATTR{idProduct}=="1015", ATTR{idVendor}=="1366", MODE="666"
+  #  ATTR{idProduct}=="1015", ATTR{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1"
+  #'';
+
+  services.gnome.gnome-keyring.enable = true;
+  system.tools.nixos-version.enable = true;
+  programs.java.enable = true;
 
   programs.steam.enable = true;
 
@@ -330,6 +358,140 @@ in {
     signal.extraArgs = [
       "192.168.50.60"
     ];
+  };
+
+#services.gitea.settings.server.HTTP_ADDR = "0.0.0.0";
+  services.gitea = {
+    enable = true;
+    appName = "Gitea";
+    user = "gitea";
+    group = "gitea";
+
+    database = {
+      type = "sqlite3";
+    };
+
+    #dataDir = "/home/pero/Gitea";
+
+    settings = {
+      server = {
+        #ROOT_URL = "http://192.168.68.113:3000/";
+        #DOMAIN = "192.168.68.113";
+        #HTTP_ADDR = "192.168.68.113";
+        ROOT_URL = "http://localhost:3000/";
+        DOMAIN = "localhost";
+        HTTP_ADDR = "0.0.0.0";
+        HTTP_PORT = 3000;
+      };
+
+      database = {
+        DB_TYPE = "sqlite3";
+        #PATH = "/home/pero/Gitea/gitea.db";
+      };
+
+      security = {
+        INSTALL_LOCK = true;
+        #SECRET_KEY = "81238e8bbdab7d4952dd325e8a5cfbd15cbf5d0b7692ce9aea9353cb822ae54d";
+      };
+    };
+  };
+
+  users.users.gitea = {
+    isSystemUser = true;
+    #home = "/home/pero/Gitea";
+    group = "gitea";
+  };
+  users.groups.gitea = {};
+
+  #services.gitea-actions-runner = {
+    ##enable = true;
+
+  #  instances = {
+  #    runner1 = {
+  #      enable = true;
+
+  #      name = "runner1";
+
+  #      # URL of the Gitea instance, e.g., http://localhost:3000
+  #      url = "http://localhost:3000";
+        ##url = "http://192.168.68.113:3000";
+
+        # The token for registering this runner (get from Gitea)
+  #      token = "YdHZ8eZTFB3r9WhBAYD8ZN8402QI3NAJn7GoJh5I";
+
+        # Optional labels for this runner
+  #      labels = ["ubuntu-latest:docker://gitea/runner-images:ubuntu-latest"];
+
+        #workDir = "/var/lib/gitea-runner/work";  # Add this line
+
+        # Optionally specify architecture/platform
+        #platform = "linux/amd64";
+
+        #extraEnvironment = {
+        #  GITEA_INSTANCE_TOKEN = builtins.readFile /home/pero/Gitea/gitea-runner-pat;
+        #};
+        # This makes git available to the runner binary
+        #extraPackages = with import <nixos-unstable> {}; [ git ];        
+
+        #path = with import <nixpkgs> {}; [ git ];
+
+  #      hostPackages = with pkgs; [
+  #        bash
+  #        coreutils
+  #        curl
+  #        gawk
+  #        gitMinimal
+  #        gnused
+  #        nodejs
+  #        wget
+  #        git
+  #      ];
+        
+  #    };
+  #  };
+  #};
+  # Enable networking, recommended
+  networking.firewall.allowedTCPPorts = [ 3000 ];  
+
+  # To allow building on the host, must override the the service's config so it doesn't use a dynamic user
+  systemd.services.gitea-runner-inst = {
+    serviceConfig = {
+      DynamicUser = lib.mkForce false;
+      # Add these lines:
+      ExecStartPre = [
+        "+${pkgs.coreutils}/bin/mkdir -p /var/lib/gitea-runner/work"
+        "+${pkgs.coreutils}/bin/chown gitea-runner:gitea-runner /var/lib/gitea-runner/work"
+      ];
+    };
+  };
+
+  users.users.gitea-runner = {
+    home = "/var/lib/gitea-runner";
+    group = "gitea-runner";
+    isSystemUser = true;
+    createHome = true;
+  };
+  users.groups.gitea-runner = {};
+  users.users.gitea-runner.extraGroups = [ "gitea" ];  
+  #age.secrets.gitea-actions-runner-token.file = /home/pero/Gitea/gitea-runner-pat;
+
+
+  ## Ensure the system rebuilds with the correct tools
+  #environment.systemPackages = with import <nixpkgs> {}; [ git ];
+
+  ## Enable networking, recommended
+  #networking.firewall.allowedTCPPorts = [ 3000 ];
+
+  services.openssh = {
+    enable = true;
+    ports = [22];
+    settings = {
+      PasswordAuthentication = true;
+      AllowUsers = null; # Allows all users by default. Can be [ "user1" "user2" ]
+      UseDns = true;
+      X11Forwarding = false;
+      PermitRootLogin = "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
+    };
   };
 
   # Open ports in the firewall.

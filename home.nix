@@ -55,9 +55,9 @@
   # Git configuration
   programs.git = {
     enable = true;
-    userName = "Per Olofsson";
-    userEmail = "per.e.olofsson@gmail.com";
-    aliases = {
+    settings.user.name = "Per Olofsson";
+    settings.user.email = "per.e.olofsson@gmail.com";
+    settings.aliases = {
       c = "commit";
       s = "status";
     };
