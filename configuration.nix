@@ -393,6 +393,21 @@ in {
         INSTALL_LOCK = true;
         #SECRET_KEY = "81238e8bbdab7d4952dd325e8a5cfbd15cbf5d0b7692ce9aea9353cb822ae54d";
       };
+
+      # This enables the mailer service globally in Gitea
+      mailer = {
+        ENABLED = true;
+        PROTOCOL = "smtps";            # Use "smtp+starttls" for port 587
+        SMTP_ADDR = "smtp.gmail.com";  # Replace with your provider
+        SMTP_PORT = 465;
+        USER = "per.e.olofsson@gmail.com";
+        FROM = "gitea@yocreo.com";
+      };
+
+      # Essential: This enables the "Forgot Password" link on the login page
+      service.ENABLE_REVERSE_PROXY_AUTHENTICATION = false; # Ensure this isn't blocking local auth
+      session.ALLOW_FORGOT_PASSWORD = true;
+
     };
   };
 
