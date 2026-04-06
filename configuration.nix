@@ -149,7 +149,7 @@ in {
     #kdePackages.ark
     # gnome-multi-writer # write usb iso
     pkg-config
-    neofetch
+    #neofetch
     menulibre #            Menueditor
     fzf
     kdePackages.filelight #        visual directory/file size scan
@@ -360,7 +360,6 @@ in {
     ];
   };
 
-#services.gitea.settings.server.HTTP_ADDR = "0.0.0.0";
   services.gitea = {
     enable = true;
     appName = "Gitea";
@@ -375,12 +374,12 @@ in {
 
     settings = {
       server = {
-        #ROOT_URL = "http://192.168.68.113:3000/";
-        #DOMAIN = "192.168.68.113";
-        #HTTP_ADDR = "192.168.68.113";
-        ROOT_URL = "http://localhost:3000/";
-        DOMAIN = "localhost";
-        HTTP_ADDR = "0.0.0.0";
+        ROOT_URL = "http://192.168.68.113:3000/";
+        DOMAIN = "192.168.68.113";
+        HTTP_ADDR = "192.168.68.113";
+        #ROOT_URL = "http://localhost:3000/";
+        #DOMAIN = "localhost";
+        #HTTP_ADDR = "0.0.0.0";
         HTTP_PORT = 3000;
       };
 
