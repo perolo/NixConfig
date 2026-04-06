@@ -42,8 +42,15 @@ home-manager switch --flake .#pero
 sudo nixos-rebuild switch  --flake .#nixos --impure
 ```
 
+## upgrade
+> Upgrade and Rebuild Nix
+```sh
+sudo nixos-rebuild switch  --upgrade --flake .#nixos --impure
+```
+
 ## list
 > List Nix channels, get latest from "https://nixos.wiki/wiki/Nix_channels"
+> Add new with nix-channel --add https://nixos.org/channels/channel-name nixos
 ```sh
 nix-channel --list
 ```
