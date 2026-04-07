@@ -3,147 +3,101 @@
   pkgs,
   ...
 }: {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
+  # Basic user information
   home.username = "pero";
   home.homeDirectory = "/home/pero";
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  # Home Manager state version
+  home.stateVersion = "24.05"; # Keep this as is unless you know what you're doing
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+  nixpkgs.config.android_sdk.accept_license = true;
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+  # Packages to install
+  home.packages = with pkgs; [
+    tldr # A simplified and community-driven man pages
+    # Add more packages here as needed
+    (pkgs.uutils-coreutils.override {prefix = "";})
+    # Android Studio
+    #android-studio-full
+    #android-studio
+    #android-tools
+    #jdk # Install a JDK (required for Android development)
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
+  # Dotfile management
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
+    # Example: Symlink a file from the Nix store to ~/.screenrc
+    # ".screenrc".source = ./dotfiles/screenrc;
 
-    # # You can also set the file content immediately.
+    # Example: Set file content directly
     # ".gradle/gradle.properties".text = ''
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
   };
 
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/pero/etc/profile.d/hm-session-vars.sh
-  #
+  # Environment variables
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    #ANDROID_HOME = "${config.home.homeDirectory}/Android/Sdk";
+    #NDROID_SDK_ROOT = "${config.home.homeDirectory}/Android/Sdk";
+    #JAVA_HOME = "${pkgs.jdk}";
+    # LIBCLANG_PATH = "${pkgs.llvmPackages_11.libclang.lib}/lib";  # Uncomment if needed
   };
 
-  programs.kitty.enable = true; # required for the default Hyprland config
-  wayland.windowManager.hyprland.enable = true; # enable Hyprland
+  # Enable Kitty terminal emulator
+  programs.kitty.enable = true;
 
-  # Optional, hint Electron apps to use Wayland:
-  # home.sessionVariables.NIXOS_OZONE_WL = "1";
+  #programs.adb.enable = true;
 
-  #programs.home-manager.backupFileExtension = "backup";
-
-  wayland.windowManager.hyprland.settings = {
-    "$mod" = "SUPER";
-    bind =
-      [
-        "$mod, F, exec, firefox"
-        ", Print, exec, grimblast copy area"
-      ]
-      ++ (
-        # workspaces
-        # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
-        builtins.concatLists (builtins.genList (
-            i: let
-              ws = i + 1;
-            in [
-              "$mod, code:1${toString i}, workspace, ${toString ws}"
-              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-            ]
-          )
-          9)
-      );
-  };
-
+  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Git configuration
   programs.git = {
     enable = true;
-    userName = "Per Olofsson";
-    userEmail = "per.e.olofsson@gmail.com";
-    aliases = {
+    settings.user.name = "Per Olofsson";
+    settings.user.email = "per.e.olofsson@gmail.com";
+    settings.aliases = {
       c = "commit";
       s = "status";
     };
   };
 
+  # Visual Studio Code configuration
+  #programs.vscode.profiles.default.extensions
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
       dracula-theme.theme-dracula
       yzhang.markdown-all-in-one
       rust-lang.rust-analyzer
       vadimcn.vscode-lldb
       ms-vscode.cpptools
+      ms-azuretools.vscode-docker
       tamasfe.even-better-toml
       fill-labs.dependi
       usernamehw.errorlens
       gruntfuggly.todo-tree
       #wokwi.wokwi-vscode
       #webfreak.debug
+      #raraspberry-pi.raspberry-pi-pico
+      # swellaby.vscode-rust-test-adapter
+      jnoortheen.nix-ide
+      ms-vscode-remote.remote-ssh
+      visualjj.visualjj
     ];
   };
 
+  # Bash configuration
   programs.bash = {
     enable = true;
     shellAliases = {
       ll = "ls -al";
+      gs = "git status";
+      hf = "history | fzf";
     };
   };
 
-  #vscode-with-extensions = pkgs.vscode-with-extensions.override {
-  #  extensions = with pkgs.vscode-extensions; [
-  #  ];
-  #};
-
-  # Let Home Manager install and manage itself.
+  # Enable Home Manager itself
   programs.home-manager.enable = true;
 }

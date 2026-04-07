@@ -8,11 +8,18 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ##cosmic
+    #nixpkgs.follows = "nixos-cosmic/nixpkgs"; # NOTE: change "nixpkgs" to "nixpkgs-stable" to use stable NixOS release
+
+    #nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
   };
 
   outputs = {
     nixpkgs,
     home-manager,
+    #self,
+    #nixos-cosmic,
     ...
   }: let
     system = "x86_64-linux";
@@ -28,5 +35,30 @@
       # Optionally use extraSpecialArgs
       # to pass through arguments to home.nix
     };
+    # original flake
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        # Import the previous configuration.nix we used,
+        # so the old configuration file still takes effect
+        ./configuration.nix
+      ];
+    };
+    ## cosmic attempt
+    #nixosConfigurations = {
+    #  # NOTE: change "host" to your system's hostname
+    #  nixos = nixpkgs.lib.nixosSystem {
+    #    modules = [
+    #      {
+    #        nix.settings = {
+    #          substituters = [ "https://cosmic.cachix.org/" ];
+    #          trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+    #        };
+    #      }
+    #      nixos-cosmic.nixosModules.default
+    #      ./configuration.nix
+    #    ];
+    #  };
+    #};
   };
 }
