@@ -210,8 +210,8 @@ in {
     jq
     #surrealdb
     #surrealist
-    unstable.influxdb2-server
-    unstable.influxdb2-cli
+    #unstable.influxdb2-server
+    #unstable.influxdb2-cli
     #rustdesk
     #rustdesk-server         # hbbs -r 192.168.50.60, hbbr
     git
@@ -221,12 +221,13 @@ in {
     bacon #                  # cargo in the background
     mask #                    define builds with a md file
     gitea
-    gitea-actions-runner
+    #gitea-actions-runner
 
     # Media
     gimp3-with-plugins #
     digikam # picture management
     exiftool #                     Read picture data
+    immich-go #                     Selfhosted photo management
     #kdenlive #
     #kdePackages.kdenlive                    video edit
     #poppler-utils #               pdf utils
@@ -348,17 +349,17 @@ in {
   virtualisation.docker.enable = true;
   #services.ollama.enable = true;
   #programs.go.enable = true;
-  services.influxdb2.enable = true;
+  #services.influxdb2.enable = true;
 
-  services.rustdesk-server = {
-    enable = true;
-    openFirewall = true;
-    relay.enable = true;
-    signal.enable = true;
-    signal.extraArgs = [
-      "192.168.50.60"
-    ];
-  };
+  #services.rustdesk-server = {
+  #  enable = true;
+  #  openFirewall = true;
+  #  relay.enable = true;
+  #  signal.enable = true;
+  #  signal.extraArgs = [
+  #    "192.168.50.60"
+  #  ];
+  #};
 
   services.gitea = {
     enable = true;
@@ -374,12 +375,12 @@ in {
 
     settings = {
       server = {
-        ROOT_URL = "http://192.168.68.113:3000/";
-        DOMAIN = "192.168.68.113";
-        HTTP_ADDR = "192.168.68.113";
-        #ROOT_URL = "http://localhost:3000/";
-        #DOMAIN = "localhost";
-        #HTTP_ADDR = "0.0.0.0";
+        #ROOT_URL = "http://192.168.68.113:3000/";
+        #DOMAIN = "192.168.68.113";
+        #HTTP_ADDR = "192.168.68.113";
+        ROOT_URL = "http://localhost:3000/";
+        DOMAIN = "localhost";
+        HTTP_ADDR = "0.0.0.0";
         HTTP_PORT = 3000;
       };
 
@@ -396,8 +397,8 @@ in {
       # This enables the mailer service globally in Gitea
       mailer = {
         ENABLED = true;
-        PROTOCOL = "smtps";            # Use "smtp+starttls" for port 587
-        SMTP_ADDR = "smtp.gmail.com";  # Replace with your provider
+        PROTOCOL = "smtps"; # Use "smtp+starttls" for port 587
+        SMTP_ADDR = "smtp.gmail.com"; # Replace with your provider
         SMTP_PORT = 465;
         USER = "per.e.olofsson@gmail.com";
         FROM = "gitea@yocreo.com";
@@ -406,7 +407,6 @@ in {
       # Essential: This enables the "Forgot Password" link on the login page
       service.ENABLE_REVERSE_PROXY_AUTHENTICATION = false; # Ensure this isn't blocking local auth
       session.ALLOW_FORGOT_PASSWORD = true;
-
     };
   };
 
@@ -418,7 +418,7 @@ in {
   users.groups.gitea = {};
 
   #services.gitea-actions-runner = {
-    ##enable = true;
+  ##enable = true;
 
   #  instances = {
   #    runner1 = {
@@ -428,26 +428,26 @@ in {
 
   #      # URL of the Gitea instance, e.g., http://localhost:3000
   #      url = "http://localhost:3000";
-        ##url = "http://192.168.68.113:3000";
+  ##url = "http://192.168.68.113:3000";
 
-        # The token for registering this runner (get from Gitea)
+  # The token for registering this runner (get from Gitea)
   #      token = "YdHZ8eZTFB3r9WhBAYD8ZN8402QI3NAJn7GoJh5I";
 
-        # Optional labels for this runner
+  # Optional labels for this runner
   #      labels = ["ubuntu-latest:docker://gitea/runner-images:ubuntu-latest"];
 
-        #workDir = "/var/lib/gitea-runner/work";  # Add this line
+  #workDir = "/var/lib/gitea-runner/work";  # Add this line
 
-        # Optionally specify architecture/platform
-        #platform = "linux/amd64";
+  # Optionally specify architecture/platform
+  #platform = "linux/amd64";
 
-        #extraEnvironment = {
-        #  GITEA_INSTANCE_TOKEN = builtins.readFile /home/pero/Gitea/gitea-runner-pat;
-        #};
-        # This makes git available to the runner binary
-        #extraPackages = with import <nixos-unstable> {}; [ git ];        
+  #extraEnvironment = {
+  #  GITEA_INSTANCE_TOKEN = builtins.readFile /home/pero/Gitea/gitea-runner-pat;
+  #};
+  # This makes git available to the runner binary
+  #extraPackages = with import <nixos-unstable> {}; [ git ];
 
-        #path = with import <nixpkgs> {}; [ git ];
+  #path = with import <nixpkgs> {}; [ git ];
 
   #      hostPackages = with pkgs; [
   #        bash
@@ -460,35 +460,34 @@ in {
   #        wget
   #        git
   #      ];
-        
+
   #    };
   #  };
   #};
   # Enable networking, recommended
-  networking.firewall.allowedTCPPorts = [ 3000 ];  
+  networking.firewall.allowedTCPPorts = [3000 2283 8384];
 
   # To allow building on the host, must override the the service's config so it doesn't use a dynamic user
-  systemd.services.gitea-runner-inst = {
-    serviceConfig = {
-      DynamicUser = lib.mkForce false;
+  #systemd.services.gitea-runner-inst = {
+  #  serviceConfig = {
+  #    DynamicUser = lib.mkForce false;
       # Add these lines:
-      ExecStartPre = [
-        "+${pkgs.coreutils}/bin/mkdir -p /var/lib/gitea-runner/work"
-        "+${pkgs.coreutils}/bin/chown gitea-runner:gitea-runner /var/lib/gitea-runner/work"
-      ];
-    };
-  };
+  #    ExecStartPre = [
+  #      "+${pkgs.coreutils}/bin/mkdir -p /var/lib/gitea-runner/work"
+  #      "+${pkgs.coreutils}/bin/chown gitea-runner:gitea-runner /var/lib/gitea-runner/work"
+  #    ];
+  #  };
+  #};
 
-  users.users.gitea-runner = {
-    home = "/var/lib/gitea-runner";
-    group = "gitea-runner";
-    isSystemUser = true;
-    createHome = true;
-  };
-  users.groups.gitea-runner = {};
-  users.users.gitea-runner.extraGroups = [ "gitea" ];  
+  #users.users.gitea-runner = {
+  #  home = "/var/lib/gitea-runner";
+  #  group = "gitea-runner";
+  #  isSystemUser = true;
+  #  createHome = true;
+  #};
+  #users.groups.gitea-runner = {};
+  #users.users.gitea-runner.extraGroups = ["gitea"];
   #age.secrets.gitea-actions-runner-token.file = /home/pero/Gitea/gitea-runner-pat;
-
 
   ## Ensure the system rebuilds with the correct tools
   #environment.systemPackages = with import <nixpkgs> {}; [ git ];
@@ -507,6 +506,37 @@ in {
       PermitRootLogin = "prohibit-password"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
     };
   };
+
+  services.immich = {
+    enable = true;
+    port = 2283;
+    host = "0.0.0.0"; # Allow access from your local network
+    openFirewall = true;
+    #mediaLocation = "/home/pero/Pictures/Immich"; # Where your photos will live
+    mediaLocation = "/var/lib/immich";
+  };
+
+  services.immich.accelerationDevices = null;
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # For Broadwell (2014) or newer processors. LIBVA_DRIVER_NAME=iHD
+      #intel-vaapi-driver # For older processors. LIBVA_DRIVER_NAME=i965
+    ];
+  };
+  environment.sessionVariables = {LIBVA_DRIVER_NAME = "iHD";}; # Optionally, set the environment variable
+  users.users.immich.extraGroups = ["video" "render"];
+
+  services.syncthing = {
+    enable = true;
+    openDefaultPorts = true; # Open ports in the firewall for Syncthing. (NOTE: this will not open syncthing gui port)
+  };
+
+  #systemd.services.gitea = {
+  #  after = [ "network-online.target" ];
+  #  requires = [ "network-online.target" ];
+  #};
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
