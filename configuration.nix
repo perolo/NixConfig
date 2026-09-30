@@ -185,7 +185,7 @@ in {
     libreoffice
     #gscan2pdf      # simple pdf scanner
     #slack
-    #unstable.ollama
+    unstable.ollama
     keepass
     steam-run
     #rpi-imager
@@ -222,6 +222,7 @@ in {
     mask #                    define builds with a md file
     gitea
     #gitea-actions-runner
+    #open-webui
 
     # Media
     gimp3-with-plugins #
@@ -347,7 +348,8 @@ in {
   # services.openssh.enable = true;
 
   virtualisation.docker.enable = true;
-  #services.ollama.enable = true;
+  services.ollama.enable = true;
+
   #programs.go.enable = true;
   #services.influxdb2.enable = true;
 
@@ -532,6 +534,10 @@ in {
     enable = true;
     openDefaultPorts = true; # Open ports in the firewall for Syncthing. (NOTE: this will not open syncthing gui port)
   };
+
+  #services.open-webui = {
+  #  enable = true;
+  #}
 
   #systemd.services.gitea = {
   #  after = [ "network-online.target" ];

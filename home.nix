@@ -55,6 +55,10 @@
   # Git configuration
   programs.git = {
     enable = true;
+    settings = {
+      submodule.recurse = true;
+      clone.recurseSubmodules = true;
+    };    
     settings.user.name = "Per Olofsson";
     settings.user.email = "per.e.olofsson@gmail.com";
     settings.aliases = {
