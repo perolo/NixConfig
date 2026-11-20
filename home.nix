@@ -65,6 +65,7 @@
       c = "commit";
       s = "status";
     };
+    signing.format = null;
   };
 
   # Visual Studio Code configuration
